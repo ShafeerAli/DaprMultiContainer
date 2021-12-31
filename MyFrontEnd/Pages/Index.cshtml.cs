@@ -17,7 +17,7 @@ namespace MyFrontEnd.Pages
 
         public async Task OnGet()
         {
-            var forecasts = await _daprClient.InvokeMethodGrpcAsync<Google.Protobuf.IMessage>("mybackend", "weatherforecast");
+            var forecasts = await _daprClient.InvokeMethodAsync<IEnumerable<WeatherForecast>>(HttpMethod.Get,"mybackend", "weatherforecast");
             ViewData["WeatherForecastData"] = forecasts;
         }
     }
