@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: MyBackEnd/Dockerfile
     ports:
-        - "52000:50001"
+        - "53000:50001"
 
   mybackend-dapr:
     image: "daprio/daprd:latest"
@@ -31,4 +31,16 @@ services:
     depends_on:
         - mybackend
     network_mode: "service:mybackend"
-
+  
+  mybackend2:
+    image: ${DOCKER_REGISTRY-}mybackend2
+    build:
+      context: .
+      dockerfile: BackendWeather/Dockerfile
+  
+  mybackend2-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "mybackend2", "-app-port", "80" ]
+    depends_on:
+        - mybackend
+    network_mode: "service:mybackend2"

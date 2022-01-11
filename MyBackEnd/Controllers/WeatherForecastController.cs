@@ -1,4 +1,6 @@
+using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
+using MyBackEnd.Services.Interfaces;
 
 namespace MyBackEnd.Controllers
 {
@@ -12,22 +14,25 @@ namespace MyBackEnd.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IWeatherForecast _daprClient;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IWeatherForecast daprClient, ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
+            _daprClient = daprClient;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet]
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return await _daprClient.GetWeather();
+            }
+            catch (Exception ex)
+            {
+                return Enumerable.Empty<WeatherForecast>();
+            }
         }
     }
-}
+}   
