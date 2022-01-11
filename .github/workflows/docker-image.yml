@@ -37,5 +37,12 @@ jobs:
         push: true
         tags: shafeer/myfrontend:latest
         file: DaprFrontEnd/Dockerfile
-      
+    -  
+      name: Build and push
+      id: docker_build_backend2
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: shafeer/mybackend2:latest
+        file: BackendWeather/Dockerfile
   
