@@ -12,10 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDaprClient();
 
 var client = DaprClient.CreateInvokeHttpClient("mybackend2");
-var refit = Refit.RestService.For<IOrder>(client);
+//var refit = Refit.RestService.For<IOrder>(client);
 
-builder.Services.AddTransient<IOrder>(_ => refit);
+//builder.Services.AddTransient<IOrder>(_ => refit);
 
+builder.Services.AddRefitClient<IOrder>().ConfigureHttpClient(a => a.BaseAddress = client.BaseAddress)
+    .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+        .AddPolicyHandler(GetRetryPolicy());
 
 builder.Services.AddControllers().AddDapr();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -13,12 +13,12 @@ builder.Services.AddDaprClient();
 
 var client = DaprClient.CreateInvokeHttpClient("mybackend");
 
-var refit = Refit.RestService.For<IWeatherForecast>(client);
-builder.Services.AddTransient<IWeatherForecast>(_ => refit);
+//var refit = Refit.RestService.For<IWeatherForecast>(client);
+//builder.Services.AddTransient<IWeatherForecast>(_ => refit);
 
-//builder.Services.AddRefitClient<IWeatherForecast>().ConfigureHttpClient(a => a.BaseAddress = client.BaseAddress)
-//    .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
-//        .AddPolicyHandler(GetRetryPolicy());
+builder.Services.AddRefitClient<IWeatherForecast>().ConfigureHttpClient(a => a.BaseAddress = client.BaseAddress)
+    .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+        .AddPolicyHandler(GetRetryPolicy());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
