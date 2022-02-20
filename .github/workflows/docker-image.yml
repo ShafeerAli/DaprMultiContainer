@@ -46,12 +46,6 @@ jobs:
         tags: shafeer/mybackend2:1.0.0.${{ github.run_number }}
         file: BackendWeather/Dockerfile
     - 
-      name: Azure CLI Init
-      uses: Azure/cli@v1.0.6
-      with:
-        # Specify the script here
-        inlineScript: az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.0-py2.py3-none-any.whl 
-    - 
       name: Azure CLI update
       uses: Azure/cli@v1.0.6
       with:
