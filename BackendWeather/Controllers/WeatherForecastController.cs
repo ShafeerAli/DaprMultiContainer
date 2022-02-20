@@ -1,3 +1,4 @@
+using Dapr;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWeather.Controllers
@@ -28,6 +29,13 @@ namespace BackendWeather.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [Topic("pubsub", "newOrder")]
+        [HttpPost("/orders")]
+        public ActionResult<OrderData> CreateOrder(OrderData order)
+        {
+            return new ActionResult<OrderData>(order);
         }
     }
 }

@@ -12,14 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDaprClient();
 
 var client = DaprClient.CreateInvokeHttpClient("mybackend2");
-var refit = Refit.RestService.For<IWeatherForecast>(client);
+var refit = Refit.RestService.For<IOrder>(client);
 
-builder.Services.AddTransient<IWeatherForecast>(_ => refit);
+builder.Services.AddTransient<IOrder>(_ => refit);
 
-
-
-
-//builder.Services.AddTransient<IWeatherForecast>(_ => Refit.RestService.For<IWeatherForecast>(client));
 
 builder.Services.AddControllers().AddDapr();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

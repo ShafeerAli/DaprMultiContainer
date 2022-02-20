@@ -20,6 +20,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCloudEvents();
 app.MapControllers();
+app.MapSubscribeHandler();  
 
 app.Run();

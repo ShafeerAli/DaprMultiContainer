@@ -14,20 +14,27 @@ namespace MyBackEnd.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IWeatherForecast _daprClient;
+        private readonly IOrder _daprClient;
 
-        public WeatherForecastController(IWeatherForecast daprClient, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IOrder daprClient, ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
             _daprClient = daprClient;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        [HttpGet(Name = "GetWeather")]
+        public async Task<IEnumerable<WeatherForecast>> GetWeather()
         {
             try
             {
-                return await _daprClient.GetWeather();
+                return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = _daprClient.GetOrder().Result.First() //Summaries[Random.Shared.Next(Summaries.Length)]
+                })
+            .ToArray();
+
             }
             catch (Exception ex)
             {

@@ -18,8 +18,21 @@ namespace MyFrontEnd.Pages
 
         public async Task OnGet()
         {
-            var forecasts = await _weatherForecast.GetWeatherForecast();
-            ViewData["WeatherForecastData"] = forecasts;
+            try
+            {
+                var forecasts = await _weatherForecast.GetWeatherForecast();
+                ViewData["WeatherForecastData"] = forecasts;
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = ex;
+                throw;
+            }
+        }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
