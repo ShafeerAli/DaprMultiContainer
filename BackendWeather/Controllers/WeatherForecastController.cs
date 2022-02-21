@@ -20,7 +20,7 @@ namespace BackendWeather.Controllers
         }
 
         [HttpGet(Name = "GetWeather")]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> GetWeather()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

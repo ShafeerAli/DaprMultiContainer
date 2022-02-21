@@ -4,23 +4,18 @@
 
 namespace BackendWeather.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class OrderController : ControllerBase
     {
         // GET: api/<OrderController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet(Name = "GetOrder")]
+        public Task<string> GetOrder()
         {
-            return new string[] { "value1", "value2" };
+            return Task.Run(() => "Value1");
         }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+       
 
         // POST api/<OrderController>
         [HttpPost]

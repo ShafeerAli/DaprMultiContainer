@@ -4,7 +4,7 @@ namespace MyFrontEnd.Services.Interfaces
 {
     public interface IWeatherForecast
     {
-        [Get("/WeatherForecast/GetWeather")]
+        [Get("/WeatherForecast")]
         public Task<IEnumerable<WeatherForecast>> GetWeatherForecast();
     }
 }

@@ -8,6 +8,7 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers().AddDapr();
 // Add services to the container.
 builder.Services.AddDaprClient();
 
@@ -20,7 +21,6 @@ builder.Services.AddRefitClient<IOrder>().ConfigureHttpClient(a => a.BaseAddress
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
         .AddPolicyHandler(GetRetryPolicy());
 
-builder.Services.AddControllers().AddDapr();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

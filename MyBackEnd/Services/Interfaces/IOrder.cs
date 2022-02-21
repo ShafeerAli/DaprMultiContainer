@@ -6,6 +6,6 @@ namespace MyBackEnd.Services.Interfaces
     public interface IOrder
     {
         [Get("/Order")]
-        public Task<IEnumerable<string>> GetOrder();
+        public Task<string> GetOrder();
     }
 }

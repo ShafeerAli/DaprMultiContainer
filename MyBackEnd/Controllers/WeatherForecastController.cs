@@ -31,7 +31,7 @@ namespace MyBackEnd.Controllers
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = _daprClient.GetOrder().Result.First() //Summaries[Random.Shared.Next(Summaries.Length)]
+                    Summary = _daprClient.GetOrder().Result //Summaries[Random.Shared.Next(Summaries.Length)]
                 })
             .ToArray();
 
