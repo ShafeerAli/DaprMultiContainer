@@ -46,8 +46,20 @@ jobs:
         tags: shafeer/mybackend2:1.0.0.${{ github.run_number }}
         file: BackendWeather/Dockerfile
     - 
-      name: Azure CLI update
+      name: frontend update
       uses: Azure/cli@v1.0.6
       with:
         # Specify the script here
-        inlineScript: az containerapp update -n myfrontend -g my-container-apps --environment my-environment --image shafeer/myfrontend:1.0.0.${{ github.run_number }} --target-port 80
+        inlineScript: az containerapp update --name myfrontend --resource-group my-container-apps --image shafeer/myfrontend:1.0.0.${{ github.run_number }}
+    - 
+      name: backend update
+      uses: Azure/cli@v1.0.6
+      with:
+        # Specify the script here
+        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend:1.0.0.${{ github.run_number }}
+    - 
+      name: backend update
+      uses: Azure/cli@v1.0.6
+      with:
+        # Specify the script here
+        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend2:1.0.0.${{ github.run_number }}
