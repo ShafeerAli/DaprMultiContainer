@@ -28,7 +28,7 @@ jobs:
       with:
         push: true
         tags: shafeer/mybackend:1.0.0.${{ github.run_number }}
-        file: DaprBackEnd/Dockerfile
+        file: MyBackEnd/Dockerfile
     -
       name: Build and push
       id: docker_build_frontend
@@ -36,7 +36,7 @@ jobs:
       with:
         push: true
         tags: shafeer/myfrontend:1.0.0.${{ github.run_number }}
-        file: DaprFrontEnd/Dockerfile
+        file: MyFrontEnd/Dockerfile
     -  
       name: Build and push
       id: docker_build_backend2
@@ -50,16 +50,16 @@ jobs:
       uses: Azure/cli@v1.0.6
       with:
         # Specify the script here
-        inlineScript: az containerapp update --name myfrontend --resource-group my-container-apps --image shafeer/myfrontend:1.0.0.${{ github.run_number }}
+        inlineScript: az containerapp update --name myfrontend --resource-group my-container-apps --image shafeer/myfrontend:1.0.0.${{ github.run_number }} --environment-variable ASPNETCORE_ENVIRONMENT=Development --enable-dapr --dapr-app-id myfrontend
+    - 
+      name: backend update
+      uses: Azure/cli@v1.0.6
+      with:
+        # Specify the script here 
+        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend:1.0.0.${{ github.run_number }} --environment-variable ASPNETCORE_ENVIRONMENT=Development --enable-dapr --dapr-app-id mybackend
     - 
       name: backend update
       uses: Azure/cli@v1.0.6
       with:
         # Specify the script here
-        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend:1.0.0.${{ github.run_number }}
-    - 
-      name: backend update
-      uses: Azure/cli@v1.0.6
-      with:
-        # Specify the script here
-        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend2:1.0.0.${{ github.run_number }}
+        inlineScript: az containerapp update --name mybackend --resource-group my-container-apps --image shafeer/mybackend2:1.0.0.${{ github.run_number }} --environment-variable ASPNETCORE_ENVIRONMENT=Development --enable-dapr --dapr-app-id mybackend2
