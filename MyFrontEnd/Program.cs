@@ -19,6 +19,7 @@ var client = DaprClient.CreateInvokeHttpClient("mybackend");
 builder.Services.AddRefitClient<IWeatherForecast>().ConfigureHttpClient(a => a.BaseAddress = client.BaseAddress)
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
         .AddPolicyHandler(GetRetryPolicy());
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
