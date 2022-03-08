@@ -14,16 +14,14 @@ namespace MyBackEnd.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IOrder _daprClient;
 
-        public WeatherForecastController(IOrder daprClient, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController( ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _daprClient = daprClient;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> GetWeather()
+        public async Task<IEnumerable<WeatherForecast>> GetWeather([FromServices] IOrder daprClient)
         {
             try
             {
@@ -31,7 +29,7 @@ namespace MyBackEnd.Controllers
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = _daprClient.GetOrder().Result //Summaries[Random.Shared.Next(Summaries.Length)]
+                    Summary = daprClient.GetOrder().Result //Summaries[Random.Shared.Next(Summaries.Length)]
                 })
             .ToArray();
 
