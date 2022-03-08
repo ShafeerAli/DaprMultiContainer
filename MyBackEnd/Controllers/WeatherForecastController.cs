@@ -22,7 +22,7 @@ namespace MyBackEnd.Controllers
             _daprClient = daprClient;
         }
 
-        [HttpGet(Name = "GetWeather")]
+        [HttpGet]
         public async Task<IEnumerable<WeatherForecast>> GetWeather()
         {
             try
@@ -38,6 +38,7 @@ namespace MyBackEnd.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
                 return Enumerable.Empty<WeatherForecast>();
             }
         }
