@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages().AddDapr();
 builder.Services.AddDaprClient();
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["appinsightsconnectionstring"]);
 
 var client = DaprClient.CreateInvokeHttpClient("mybackend");
 
